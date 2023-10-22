@@ -35,6 +35,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.concurrent.TimeUnit;
 
@@ -149,6 +150,9 @@ public class JMHSample_11_Loops {
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_11_Loops.class.getSimpleName())
+                .measurementIterations(1)
+                .measurementTime(TimeValue.seconds(1))
+                .warmupIterations(1)
                 .forks(1)
                 .build();
 

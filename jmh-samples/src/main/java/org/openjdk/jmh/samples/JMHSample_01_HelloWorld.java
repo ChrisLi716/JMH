@@ -31,11 +31,15 @@
 package org.openjdk.jmh.samples;
 
 import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Warmup;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
+@Warmup(iterations = 1, time = 1) // 预热次数和时间
+@Measurement(iterations = 1, time = 1) // 测试次数和时间
 public class JMHSample_01_HelloWorld {
 
     /*

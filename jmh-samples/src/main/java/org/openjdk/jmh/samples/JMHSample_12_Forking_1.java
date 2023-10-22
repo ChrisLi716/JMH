@@ -36,49 +36,40 @@ import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
-/*
- * Fortunately, in many cases you just need a single state object.
- * In that case, we can mark the benchmark instance itself to be
- * the @State. Then, we can reference its own fields as any
- * Java program does.
- */
+import java.lang.management.ManagementFactory;
+import java.util.concurrent.TimeUnit;
 
 @State(Scope.Thread)
-@Warmup(iterations = 1, time = 1)
-@Measurement(iterations = 1, time = 1)
-public class JMHSample_04_DefaultState {
+@BenchmarkMode(Mode.AverageTime)
+@Warmup(iterations = 2,time = 1)
+@Measurement(iterations = 2, time = 1)
+@OutputTimeUnit(TimeUnit.NANOSECONDS)
+public class JMHSample_12_Forking_1 {
 
-    double x = Math.PI;
-
-    @Benchmark
-    public void measure() {
-        x++;
+    @Setup(Level.Trial)
+    public void setup(){
+        printProcessID("setup");
     }
 
-    /*
-     * ============================== HOW TO RUN THIS TEST: ====================================
-     *
-     * You can see the benchmark runs as usual.
-     *
-     * You can run this test:
-     *
-     * a) Via the command line:
-     *    $ mvn clean install
-     *    $ java -jar target/benchmarks.jar JMHSample_04 -f 1
-     *    (we requested single fork; there are also other options, see -h)
-     *
-     * b) Via the Java API:
-     *    (see the JMH homepage for possible caveats when running from IDE:
-     *      http://openjdk.java.net/projects/code-tools/jmh/)
-     */
+    @Benchmark
+    @Fork(10)
+    public int measure1_c1(){
+        return 1;
+    }
+    public static void printProcessID(String name) {
+        System.out.println("----------------------------------------------------------------");
+        System.out.println(name + " pid is " + ManagementFactory.getRuntimeMXBean().getName());
+        System.out.println("----------------------------------------------------------------");
+    }
 
     public static void main(String[] args) throws RunnerException {
+        printProcessID("main");
         Options opt = new OptionsBuilder()
-                .include(JMHSample_04_DefaultState.class.getSimpleName())
-                .forks(1)
+                .include(JMHSample_12_Forking_1.class.getSimpleName())
                 .build();
 
         new Runner(opt).run();
     }
 
 }
+

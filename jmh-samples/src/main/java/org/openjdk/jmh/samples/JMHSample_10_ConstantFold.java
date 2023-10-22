@@ -41,6 +41,8 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 1, time = 1)
+@Measurement(iterations = 1, time = 1)
 public class JMHSample_10_ConstantFold {
 
     /*

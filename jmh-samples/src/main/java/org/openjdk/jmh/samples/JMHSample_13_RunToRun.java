@@ -42,6 +42,7 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.concurrent.TimeUnit;
 
@@ -73,6 +74,9 @@ public class JMHSample_13_RunToRun {
         @Setup
         public void setup() {
             sleepTime = (long) (Math.random() * 1000);
+            System.out.println("----------------------");
+            System.out.println("sleepTime:" + sleepTime);
+            System.out.println("----------------------");
         }
     }
 
@@ -91,12 +95,12 @@ public class JMHSample_13_RunToRun {
     public void fork_1(SleepyState s) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(s.sleepTime);
     }
-
+    /*
     @Benchmark
     @Fork(20)
     public void fork_2(SleepyState s) throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(s.sleepTime);
-    }
+    }*/
 
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
@@ -119,8 +123,9 @@ public class JMHSample_13_RunToRun {
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_13_RunToRun.class.getSimpleName())
-                .warmupIterations(0)
+                .warmupIterations(1)
                 .measurementIterations(3)
+                .measurementTime(TimeValue.seconds(3))
                 .build();
 
         new Runner(opt).run();

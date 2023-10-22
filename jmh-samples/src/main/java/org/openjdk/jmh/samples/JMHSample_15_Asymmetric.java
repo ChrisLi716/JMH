@@ -43,12 +43,13 @@ import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @State(Scope.Group)
-@BenchmarkMode(Mode.AverageTime)
+@BenchmarkMode(Mode.Throughput)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 public class JMHSample_15_Asymmetric {
 
@@ -98,6 +99,29 @@ public class JMHSample_15_Asymmetric {
         return counter.get();
     }
 
+
+    @Benchmark
+    @Group("g_single_get")
+    public int single_get() {
+        return counter.get();
+    }
+
+
+    @Benchmark
+    @Group("g_single_ink_1")
+    @GroupThreads(1)
+    public int single_ink_1() {
+        return counter.get();
+    }
+
+    @Benchmark
+    @Group("g_single_ink_3")
+    @GroupThreads(3)
+    public int single_ink_3() {
+        return counter.get();
+    }
+
+
     /*
      * ============================== HOW TO RUN THIS TEST: ====================================
      *
@@ -118,6 +142,10 @@ public class JMHSample_15_Asymmetric {
     public static void main(String[] args) throws RunnerException {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_15_Asymmetric.class.getSimpleName())
+                .warmupIterations(1)
+                .warmupTime(TimeValue.seconds(2))
+                .measurementIterations(1)
+                .measurementTime(TimeValue.seconds(1))
                 .forks(1)
                 .build();
 

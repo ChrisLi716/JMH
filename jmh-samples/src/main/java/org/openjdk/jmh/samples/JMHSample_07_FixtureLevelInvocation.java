@@ -45,6 +45,8 @@ import java.util.concurrent.*;
  * think time)
  */
 @OutputTimeUnit(TimeUnit.MICROSECONDS)
+@Warmup(iterations = 2, time = 1)
+@Measurement(iterations = 2, time = 1)
 public class JMHSample_07_FixtureLevelInvocation {
 
     /*
@@ -86,11 +88,10 @@ public class JMHSample_07_FixtureLevelInvocation {
      */
 
     public static class LaggingState extends NormalState {
-        public static final int SLEEP_TIME = Integer.getInteger("sleepTime", 10);
 
         @Setup(Level.Invocation)
         public void lag() throws InterruptedException {
-            TimeUnit.MILLISECONDS.sleep(SLEEP_TIME);
+            TimeUnit.MILLISECONDS.sleep(10);
         }
     }
 
@@ -119,6 +120,7 @@ public class JMHSample_07_FixtureLevelInvocation {
     @State(Scope.Thread)
     public static class Scratch {
         private double p;
+
         public double doWork() {
             p = Math.log(p);
             return p;

@@ -37,6 +37,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @State(Scope.Thread)
+@Warmup(iterations = 2, time = 1)
+@Measurement(iterations = 2, time = 1)
 public class JMHSample_05_StateFixtures {
 
     double x;
@@ -67,6 +69,7 @@ public class JMHSample_05_StateFixtures {
     @Setup
     public void prepare() {
         x = Math.PI;
+        System.out.println("----- do Setup");
     }
 
     /*
@@ -75,7 +78,8 @@ public class JMHSample_05_StateFixtures {
 
     @TearDown
     public void check() {
-        assert x > Math.PI : "Nothing changed?";
+        System.out.println("----- do TearDown");
+        // assert x > Math.PI : "Nothing changed?";
     }
 
     /*

@@ -37,6 +37,8 @@ import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 @State(Scope.Thread)
+@Warmup(iterations = 3, time = 2)
+@Measurement(iterations = 3, time = 2)
 public class JMHSample_06_FixtureLevel {
 
     double x;
@@ -54,9 +56,16 @@ public class JMHSample_06_FixtureLevel {
      * metrics, so you can use this to do some heavy-lifting.
      */
 
-    @TearDown(Level.Iteration)
+    @Setup(Level.Invocation)
+    public void init() {
+        System.out.println("----- do Setup");
+    }
+
+    // @TearDown(Level.Trial) // 整个Benchmark测试完成后才会被执行一次
+    // @TearDown(Level.Iteration) // 每一轮Benchmark测试完成后才会被执行一次
+    @TearDown(Level.Invocation) // 每次方法被调用，都会被执行一次
     public void check() {
-        assert x > Math.PI : "Nothing changed?";
+        System.out.println("----- do TearDown");
     }
 
     @Benchmark

@@ -42,6 +42,8 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Thread)
+@Warmup(iterations = 2, time = 1)
+@Measurement(iterations = 1, time = 1)
 public class JMHSample_09_Blackholes {
 
     /*

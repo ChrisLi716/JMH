@@ -30,10 +30,7 @@
  */
 package org.openjdk.jmh.samples;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.BenchmarkMode;
-import org.openjdk.jmh.annotations.Mode;
-import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -41,6 +38,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
 
+@Warmup(iterations = 1, time = 1)
+@Measurement(iterations = 1, time = 1)
 public class JMHSample_02_BenchmarkModes {
 
     /*
@@ -73,12 +72,12 @@ public class JMHSample_02_BenchmarkModes {
      * although you can use the default.
      */
 
-    @Benchmark
+    /*@Benchmark
     @BenchmarkMode(Mode.Throughput)
     @OutputTimeUnit(TimeUnit.SECONDS)
     public void measureThroughput() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(100);
-    }
+    }*/
 
     /*
      * Mode.AverageTime measures the average execution time, and it does it
@@ -88,12 +87,12 @@ public class JMHSample_02_BenchmarkModes {
      * There are workloads where measuring times is more convenient though.
      */
 
-    @Benchmark
+   /* @Benchmark
     @BenchmarkMode(Mode.AverageTime)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @OutputTimeUnit(TimeUnit.SECONDS)
     public void measureAvgTime() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(100);
-    }
+    }*/
 
     /*
      * Mode.SampleTime samples the execution time. With this mode, we are
@@ -106,12 +105,12 @@ public class JMHSample_02_BenchmarkModes {
      * JMH also tries to auto-adjust sampling frequency: if the method
      * is long enough, you will end up capturing all the samples.
      */
-    @Benchmark
+    /*@Benchmark
     @BenchmarkMode(Mode.SampleTime)
-    @OutputTimeUnit(TimeUnit.MICROSECONDS)
+    @OutputTimeUnit(TimeUnit.SECONDS)
     public void measureSamples() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(100);
-    }
+    }*/
 
     /*
      * Mode.SingleShotTime measures the single method invocation time. As the Javadoc
@@ -122,23 +121,23 @@ public class JMHSample_02_BenchmarkModes {
      * This mode is useful to do cold startup tests, when you specifically
      * do not want to call the benchmark method continuously.
      */
-    @Benchmark
+    /*@Benchmark
     @BenchmarkMode(Mode.SingleShotTime)
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void measureSingleShot() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(100);
-    }
+    }*/
 
     /*
      * We can also ask for multiple benchmark modes at once. All the tests
      * above can be replaced with just a single test like this:
      */
-    @Benchmark
+    /*@Benchmark
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime, Mode.SampleTime, Mode.SingleShotTime})
     @OutputTimeUnit(TimeUnit.MICROSECONDS)
     public void measureMultiple() throws InterruptedException {
         TimeUnit.MILLISECONDS.sleep(100);
-    }
+    }*/
 
     /*
      * Or even...

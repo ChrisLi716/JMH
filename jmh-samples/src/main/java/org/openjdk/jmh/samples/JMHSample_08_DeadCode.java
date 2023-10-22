@@ -41,6 +41,8 @@ import java.util.concurrent.TimeUnit;
 @State(Scope.Thread)
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
+@Warmup(iterations = 2, time = 1)
+@Measurement(iterations = 2, time = 1)
 public class JMHSample_08_DeadCode {
 
     /*
@@ -103,6 +105,7 @@ public class JMHSample_08_DeadCode {
         Options opt = new OptionsBuilder()
                 .include(JMHSample_08_DeadCode.class.getSimpleName())
                 .forks(1)
+                .jvmArgs("-server") // 这里设置为server模式，以充分使用JIT
                 .build();
 
         new Runner(opt).run();
