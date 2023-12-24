@@ -10,6 +10,10 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 编译后的字节码基本一样，只是在用+号拼接时，会每次New一个StringBuilder对象，然后append，比较耗时
+ * 所以对字符串进行循环拼接时建议使用StringBuilder
+ */
 @BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 2, time = 1)
 @Measurement(iterations = 3, time = 1)

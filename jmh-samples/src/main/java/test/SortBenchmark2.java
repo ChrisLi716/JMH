@@ -52,9 +52,9 @@ public class SortBenchmark2 {
     public static void main(String[] args) throws RunnerException {
         // 启动基准测试
         Options opt = new OptionsBuilder()
-                .include(SortBenchmark2.class.getSimpleName()) // 要导入的测试类
+                .include(SortBenchmark2.class.getSimpleName()) // 要导入的测试�?
                 .result("SortBenchmark2.json")
-                .mode(Mode.All)
+                .mode(Mode.AverageTime)
                 .resultFormat(ResultFormatType.JSON)
                 .build();
         new Runner(opt).run(); // 执行测试
